@@ -23,5 +23,5 @@ jobs:                           # jobs to execute on event
           PROD_SERVER: ${{ secrets.PRODUCTION_SERVER }}
           SSH_CONNECT_STR: $PROD_USER@$PROD_SERVER
         run: |
-          ssh $SSH_CONNECT_STR
+          echo $SSH_CONNECT_STR
       - run: ls -la
