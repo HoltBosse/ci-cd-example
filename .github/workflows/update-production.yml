@@ -1,0 +1,11 @@
+name: update-production         # the name of the workflow
+on:                             # the event on which to execute the workflow
+  push:
+    branches:
+      - master
+jobs:                           # jobs to execute on event
+  name-of-job-here:
+    runs-on: ubuntu-latest      # the type of runner this will execute on
+    steps:
+      - run: ls -la             # runs command
+      - run: pwd                # runs command
