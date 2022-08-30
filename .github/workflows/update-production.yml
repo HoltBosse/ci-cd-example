@@ -24,9 +24,7 @@ jobs:                           # jobs to execute on event
     steps:
       - shell: bash
         env:
-          PROD_USER: ${{ secrets.PRODUCTION_USER }}
           PROD_SERVER: ${{ secrets.PRODUCTION_SERVER }}
-        run: ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_SERVER }}
-        # run: |
-        #   ssh "$PROD_USER"@"$PROD_SERVER"
+        run: |
+          sudo ssh "anthony"@"$PROD_SERVER"
       - run: ls -la
