@@ -17,7 +17,7 @@ jobs:                           # jobs to execute on event
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo '"$SSH_KEY"' >> ~/.ssh/approved_keys
-      - run: ping anthony.holtbosselabs.com
+      - run: ping -c 4 anthony.holtbosselabs.com
       - shell: bash
         env:
           PROD_USER: ${{ secrets.PRODUCTION_USER }}
