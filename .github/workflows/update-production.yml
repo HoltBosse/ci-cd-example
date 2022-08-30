@@ -14,10 +14,16 @@ jobs:                           # jobs to execute on event
     runs-on: ubuntu-latest
     steps:
       - run: mkdir -p ~/.ssh
-      - run: echo '${{ SSH_PRIVATE_KEY }}' >> ~/.ssh/approved_keys
+      - env:
+          SSH_PRIVATE_KEY: ${{ SSH_PRIVATE_KEY }}
+        run: echo '$SSH_PRIVATE_KEY' >> ~/.ssh/approved_keys
   
   ssh-into-production-server:
     runs-on: ubuntu-latest
     steps:
-      - run: ssh ${{ PRODUCTION_USER }}@${{ PRODUCTION_SERVER }}
+      - shell: bash
+        env:
+          PRODUCTION_USER: ${{ PRODUCTION_USER }}
+          PRODUCTION_SERVER: ${{ PRODUCTION_SERVER }}
+        run: ssh $PRODUCTION_USER@$PRODUCTION_SERVER
       - run: ls -la
