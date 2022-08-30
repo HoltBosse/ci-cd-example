@@ -8,7 +8,7 @@ jobs:                           # jobs to execute on event
   install-ssh:
     runs-on: ubuntu-latest      # the type of runner this will execute on
     steps:
-      - run: apt install -y openssh-client
+      - run: sudo apt install -y openssh-client
   
   add-private-key-to-runner:
     runs-on: ubuntu-latest
