@@ -15,7 +15,7 @@ jobs:                           # jobs to execute on event
     steps:
       - run: mkdir -p ~/.ssh
       - env:
-          SSH_KEY: ${{ SSH_PRIVATE_KEY }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo '"$SSH_KEY"' >> ~/.ssh/approved_keys
   
@@ -24,8 +24,8 @@ jobs:                           # jobs to execute on event
     steps:
       - shell: bash
         env:
-          PROD_USER: ${{ PRODUCTION_USER }}
-          PROD_SERVER: ${{ PRODUCTION_SERVER }}
+          PROD_USER: ${{ secrets.PRODUCTION_USER }}
+          PROD_SERVER: ${{ secrets.PRODUCTION_SERVER }}
         run: |
           ssh "$PROD_USER"@"$PROD_SERVER"
       - run: ls -la
