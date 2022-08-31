@@ -18,6 +18,5 @@ jobs:                           # jobs to execute on event
           username: ${{ secrets.PRODUCTION_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ls -la
-            whoami
-            pwd
+            cd ci-cd-example/prod
+            git pull
