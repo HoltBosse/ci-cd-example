@@ -1,12 +1,12 @@
-name: update-production                                       # the name of the workflow
-on:                                                           # the event on which to execute the workflow
-  push:                                                       # only execute action on push
-    branches:                                                 # change on which branch(s) to listen for push
+name: Update Production Site        # name of workflow
+on:                                 # event on which to execute the workflow
+  push:                             # when to execute actions
+    branches:                       # listen for on these branch(es)
       - master                  
-jobs:                                                         # jobs to execute on event
-  ssh-to-host-and-git-pull:                                   # first (and only) job
-    name: SSH into production server and run a git pull.
-    runs-on: ubuntu-latest                                    # the type of runner this will execute on
+jobs:                               # jobs to execute on event
+  git-pull-on-prod:                 
+    name: Git Pull on Production
+    runs-on: ubuntu-latest          # the type of runner this will execute on
     steps:
       - name: Execute git commands over ssh using private key.
         uses: appleboy/ssh-action@master
@@ -15,5 +15,5 @@ jobs:                                                         # jobs to execute 
           username: ${{ secrets.PRODUCTION_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/anthony/public_html/ci-cd-example/prod   # pwd to directory
-            git pull                                          # pull updates
+            cd /home/anthony/public_html/ci-cd-example/prod   # pwd of directory
+            git pull                                          # pull updates from git
