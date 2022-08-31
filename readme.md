@@ -17,7 +17,7 @@ Unless you want to use an existing public/private key, you'll need to generate o
 2. Verify that a `.git` directory is present. If there isn't, now is a great time to run `git fetch {https://github.com/you/yourrepository}`.
 
 #### 2.3 Get Project Working Directory 
-1. Run `pwd` (print working directory) inside the directory that contains the application files. Note the result down as you will need them in a later step.
+Run `pwd` (print working directory) inside the directory that contains the application files. Note the result down as you will need them in a later step.
 
 ### 3. Ready Development Server with Workflow Script
 1. Log on to the development server.
