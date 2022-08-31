@@ -1,22 +1,19 @@
-name: update-production         # the name of the workflow
-on:                             # the event on which to execute the workflow
-  push:
-    branches:
-      - master
-jobs:                           # jobs to execute on event
-  
-  ssh-and-update-prod:
-    name: deploy
-    runs-on: ubuntu-latest      # the type of runner this will execute on
+name: update-production                                       # the name of the workflow
+on:                                                           # the event on which to execute the workflow
+  push:                                                       # only execute action on push
+    branches:                                                 # change on which branch(s) to listen for push
+      - master                  
+jobs:                                                         # jobs to execute on event
+  ssh-to-host-and-git-pull:                                   # first (and only) job
+    name: SSH into production server and run a git pull.
+    runs-on: ubuntu-latest                                    # the type of runner this will execute on
     steps:
-      # - name: Install openssh client.
-      #   run: sudo apt install -y openssh-client
-      - name: Execute commands over ssh using private key.
+      - name: Execute git commands over ssh using private key.
         uses: appleboy/ssh-action@master
         with: 
           host: ${{ secrets.PRODUCTION_SERVER }}
           username: ${{ secrets.PRODUCTION_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/anthony/public_html/ci-cd-example/prod
-            git pull
+            cd /home/anthony/public_html/ci-cd-example/prod   # pwd to directory
+            git pull                                          # pull updates
