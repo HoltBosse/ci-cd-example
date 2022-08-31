@@ -18,5 +18,5 @@ jobs:                           # jobs to execute on event
           username: ${{ secrets.PRODUCTION_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ci-cd-example/prod
+            cd /home/anthony/public_html/ci-cd-example/prod
             git pull
