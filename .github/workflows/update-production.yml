@@ -5,22 +5,19 @@ on:                             # the event on which to execute the workflow
       - master
 jobs:                           # jobs to execute on event
   
-  ssh-to-prod-server:
+  ssh-and-update-prod:
+    name: deploy
     runs-on: ubuntu-latest      # the type of runner this will execute on
     steps:
       # - name: Install openssh client.
       #   run: sudo apt install -y openssh-client
-      - name: Add private key to runner.
-        run: mkdir -p ~/.ssh
-      - name: Add private ssh key to runner.
-        env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo '"$SSH_KEY"' >> ~/.ssh/approved_keys
-      - run: ping -c 4 anthony.holtbosselabs.com
-      - shell: bash
-        env:
-          PROD_USER: ${{ secrets.PRODUCTION_USER }}
-          PROD_SERVER: ${{ secrets.PRODUCTION_SERVER }}
-        run: ssh "$PROD_USER"@"$PROD_SERVER"
-      - run: ls -la
+      - name: Execute commands over ssh using private key.
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.PRODUCTION_SERVER }}
+          username: ${{ secrets.PRODUCTION_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ls -la
+            whoami
+            pwd
