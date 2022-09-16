@@ -30,8 +30,6 @@ Generate a key to be used by a) the GitHub actions runner to connect to the prod
 ### Get PWD of Project
 1. Run `pwd` (print working directory) inside the directory that contains the `.git` directory. Copy the result down as you will need it in a later step.
 
----
-
 ## Development Server
 
 ### Create Workflow Script
@@ -41,8 +39,6 @@ Generate a key to be used by a) the GitHub actions runner to connect to the prod
 3. Create a `.github` folder. Inside it, create a `workflows` folder.
 4. Inside `workflows` create a `.yml` script. This will define the workflow. The content of the script should be a copy of or very similar to that in this repository (located at `.github/workflows/update-production.yml`).
 5. **DON'T YET PUSH TO GIT!** You'll need to modify the GitHub repository and GitHub account in the next steps before this script can successfully execute.
-
----
 
 ## GitHub
 
@@ -65,9 +61,5 @@ Note that the development script utilizes GitHub secrets, for example `${{ secre
     - name: `SSH_PRIVATE_KEY`, value: The entire contents of the production server's private ssh key generated previously, i.e. the contents we retrieved with `cat ~/.ssh/id_rsa`.
     - name: `PRODUCTION_PWD`, value: The result of running `pwd` in the top level directory of the production environment.
 
----
-
 ## Watch the Magic Happen
 At this point if you've completed all the steps correctly you should be able to go back to your development site and make a `git push`. Give the runner about 30 seconds to do its work and then check your production environment. Provided that everything worked `.github/workflows/actions-script-name-here.yml` should appear in your production environment. (If not, navigate to the Actions panel of the repository and examine the action to see what might have gone wrong... Happy debugging!) If it does appear, then you're set and any further pushes to your master branch on GitHub will automagically be deployed to the development environment.
-
----
