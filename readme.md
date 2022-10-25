@@ -24,8 +24,11 @@ Generate a key to be used by a) the GitHub actions runner to connect to the prod
 ### Verify Git is Present and Using SSH
 
 1. Navigate to the directory that the application files live in. 
-2. Verify that a `.git` directory is present. If there isn't use `git fetch` to grab only the `.git` directory from the remote repository.
-3. Use `git config --list` to verify that the remote repo is a SSH remote like git@github.com:{you}/{repo}.git. If it is not (i.e. it is an http remote like `https://github.com/{owner}/{repo}.git`) use `git remote set-url {remote_name} git@github.com:{owner}/{repo}.git` to change it to whatever SSH remote is listed for the repository on [GitHub](https://github.com). This will allow the production server to pull from GitHub using its SSH key for authentication (we will add the public key to GitHub in a future step).
+2. Verify that a `.git` directory is present. If there isn't use `git fetch` to grab new files (like the needed `.git` directory) from the remote repository.
+3. Use `git config --list` to verify that the remote repo is a SSH remote like `git@github.com:{you}/{repo}.git`.
+    * If it **IS** you're good.
+    * If it **IS NOT** (i.e. it is an http remote like `https://github.com/{owner}/{repo}.git`) use `git remote set-url {remote_name} git@github.com:{owner}/{repo}.git` to change it to whatever SSH remote is listed for the repository on [GitHub](https://github.com). This will allow the production server to pull from GitHub using its SSH key for authentication (we will add the public key to GitHub in a future step).
+4. Add the fingerprint of GitHub's server to the production server by connecting to some SSH remote. **If and only if you know the production repo is already up to date** perform a `git pull` to test the SSH remote and add GitHub's fingerprint to the server's known_hosts. Otherwise, consider doing a `git clone` of a random **SSH** repository elsewhere. You can immediately delete the files, but this will add GitHub fingerprint to the server's known_hosts file. 
 
 ### Get PWD of Project
 1. Run `pwd` (print working directory) inside the directory that contains the `.git` directory. Copy the result down as you will need it in a later step.
@@ -62,4 +65,5 @@ Note that the development script utilizes GitHub secrets, for example `${{ secre
     - name: `PRODUCTION_PWD`, value: The result of running `pwd` in the top level directory of the production environment.
 
 ## Watch the Magic Happen
+### (Or, more likely, begin debugging.)
 At this point if you've completed all the steps correctly you should be able to go back to your development site and make a `git push`. Give the runner about 30 seconds to do its work and then check your production environment. Provided that everything worked `.github/workflows/actions-script-name-here.yml` should appear in your production environment. (If not, navigate to the Actions panel of the repository and examine the action to see what might have gone wrong... Happy debugging!) If it does appear, then you're set and any further pushes to your master branch on GitHub will automagically be deployed to the development environment.
